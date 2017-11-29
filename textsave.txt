@@ -1,0 +1,17 @@
+	<%
+		
+		ArrayList<ArrayList<Object>> table = null;
+
+		DBConnect james = new DBConnect ("dsantana","silence");	
+
+		out.write("PARAMETER:");
+		out.write(request.getParameter("AdotYear"));
+			
+		String query ="select CNTLOCID, ROUTE, DIST from  dsantana.adot"+request.getParameter("AdotYear"); 
+
+		//get query from DB as an array of arrays. 
+		table = james.getQueryAsLists(query);
+
+		out.write(table.toString());
+	
+	%>
