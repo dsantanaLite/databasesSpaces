@@ -76,6 +76,46 @@ public class DBConnect{
         }
 	}
 
+	/*
+		Creates a string that puts the column data into an html table. 
+	*/
+	public static String toTable (ArrayList<ArrayList<Object>> table){
+
+		String finalStr="";
+			
+		finalStr+="<table>";	
+
+		//table headers row
+		finalStr+="<tr>";
+		
+		//table headers added seperately so the th tag can be used instead of td
+		for(int i=0; i<table.size(); i++){
+
+			finalStr+="<th>";
+			finalStr+=table.get(i).get(0);
+			finalStr+="</th>";
+		}
+
+		//close table header row. 
+		finalStr+="</tr>";
+
+		//start i at 1 bc table headers have been preadded. 
+		for(int i=1; i<table.get(0).size(); i++){
+			finalStr+="<tr>";
+			//for each column in the relation
+			for(int j=0; j<table.size();j++){
+				finalStr+="<td>";
+				finalStr+=table.get(j).get(i);
+				finalStr+="</td>";
+			}
+			finalStr+="</tr>";
+		}
+
+		finalStr+="</table>";
+
+		return finalStr;
+	}
+
 	/*	toString (ArrayList<ArrayList<Object>>)
 		Accepts an ArrayList of arraylists of type object, returns a string which shows columns 
 		in a similar form to what plsql will print when displaying a relation. 

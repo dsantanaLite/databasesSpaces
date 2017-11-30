@@ -1,0 +1,15 @@
+
+	body, option, select,input, table, td, tr{
+		font-size: 24pt;
+	}
+	
+	input{
+		height:100px;
+		width:200px;
+	}
+
+	table, tr, th{
+		border:solid;
+	}
+
+

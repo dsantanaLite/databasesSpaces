@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<title>Partially Complete Ships</title>
-		
+		<link rel="stylesheet" type="text/css" href="./spacegroup.css" />	
 	</head>
 	
 	<body>
@@ -28,7 +28,7 @@
 
 		james.close();
 
-		out.write(DBConnect.toString(table));
+		out.write(DBConnect.toTable(table));
 
 	%>
 	</pre>

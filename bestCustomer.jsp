@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<title> I4 Best Customer</title>
-		
+		<link rel="stylesheet" type="text/css" href="./spacegroup.css" />	
 	</head>
 	
 	<body>
@@ -22,14 +22,12 @@
 
 			String query ="select CNTLOCID, ROUTE from dsantana.adot2012 where CNTLOCID<100010"; 
 
-			out.write(query);
-	
 			//get query from DB as an array of arrays. 
 			table = james.getQueryAsLists(query);
 	
 			james.close();
 
-			out.write(DBConnect.toString(table));
+			out.write(DBConnect.toTable(table));
 
 		%>
 		</pre>
