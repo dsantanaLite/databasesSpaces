@@ -76,6 +76,82 @@ public class DBConnect{
         }
 	}
 
+	/*	toString (ArrayList<ArrayList<Object>>)
+		Accepts an ArrayList of arraylists of type object, returns a string which shows columns 
+		in a similar form to what plsql will print when displaying a relation. 
+	*/
+	public static String toString (ArrayList<ArrayList<Object>> table){
+
+		String finalStr="";
+
+		//the length of the longest string in each column. 
+		//added to this list in order that they exist in the table object. 
+		ArrayList<Integer> sizes = new ArrayList<Integer>();
+
+		//find the greatest length string in each column and add that length to sizes arraylist. 
+		for(int i=0; i<table.size();i++){
+
+			ArrayList<Object> currList = table.get(i);
+
+			int greatest=0;
+
+			//each item in currList. 
+			for (int j=0; j<currList.size();j++){
+
+				String objstr;
+
+				//some fields are null which will throw nullPointerException if tried to toString()
+				if(currList.get(j)!=null)
+					objstr = currList.get(j).toString();
+				else
+					objstr = "null";
+
+				if(greatest<objstr.length())
+					greatest = objstr.length();
+			}
+
+			sizes.add(greatest);	
+
+		}
+
+		//for num rows in the table. 	
+		for(int i=0; i<table.get(0).size();i++){
+
+			finalStr+="\n";
+			//column seperator. 
+			finalStr+=" | ";
+
+			//for all columns
+			for (int j=0; j<table.size();j++){
+
+				String objstr;
+
+				//some fields are null which will throw nullPointerException if tried to toString()
+				if(table.get(j).get(i)!=null)
+					objstr = table.get(j).get(i).toString();
+				else
+					objstr = "null";
+
+				finalStr+=objstr;
+	
+				//print objstr.length()-sizes.get(j)+2 whitespaces this is to make
+				//the columns print in clean columns. 
+				for(int p=objstr.length(); p<sizes.get(j);p++){
+					finalStr+=" ";
+				}
+				
+				finalStr+=" | ";
+			
+			}
+		}
+
+		finalStr+="\n";
+
+
+		return finalStr;
+
+	}
+
 	/*
 		close()
 		close this db connection
