@@ -59,3 +59,19 @@ grant update on Ship to public;
 grant update on ShipPart to public;
 grant update on Contract to public;
 grant update on MissingPart to public;
+
+grant insert on Customer to public;
+grant insert on Part to public;
+grant insert on Department to public;
+grant insert on Ship to public;
+grant insert on ShipPart to public;
+grant insert on Contract to public;
+grant insert on MissingPart to public;
+
+grant delete on Customer to public;
+grant delete on Part to public;
+grant delete on Department to public;
+grant delete on Ship to public;
+grant delete on ShipPart to public;
+grant delete on Contract to public;
+grant delete on MissingPart to public;
