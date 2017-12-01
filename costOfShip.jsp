@@ -15,44 +15,59 @@
 		<h1>Cost of Ships</h1>
 
 		<form action="./costOfShip.jsp" method="GET">
-			<label> Ship Types <select name="ships">
-				<option value="Good Ship">Good Ship</option>
-				<option value="Bad Ship">Bad Ship</option>
-				<option value="Mediocre Ship">Mediocre Ship</option>
+			<label> Ship Types 
+			<select name="ships">
+				<option>Choose a Ship</option>
+	<%
+
+		//This code block creates an options list of all ships in the database
+		//for the user to choose from
+	
+		ArrayList<ArrayList<Object>> table = null;
+
+		DBConnect conn = new DBConnect ("dsantana","silence");	
+			
+		//get ship names to make options table
+		String query ="select SHIPNAME from emanuelb.Ship"; 
+
+		//get query from DB as an array of arrays. 
+		table = conn.getQueryAsLists(query);
+
+		for(int i=1; i<table.get(0).size(); i++){
+			String shipName = (String) table.get(0).get(i);
+			out.write("<option value=\"");
+			out.write(shipName);
+			out.write("\">" + shipName);
+			out.write("</option>");
+		}
+
+		%>
+
 			</select>
 			</label>
 			<br><br>
 			<input type=submit value="See Cost"> </input>
 		</form>
+
 	<%
-	
 		String chosenShip = request.getParameter("ships");
 
-		if(chosenShip!=null)	
+		if(chosenShip!=null){	
 			out.write("You chose to see the cost of ship: "+chosenShip);
 
-		/*
-			Once tables are prepared, the options table will be created
-			by making a query to the database to get the names of all the ships. 
-			
-			Once a name is selected the database can again be queried to check its cost. 
-		*/
+			query = "select PartName, PartCost from emanuelb.Part,emanuelb.Ship,emanuelb.ShipPart where +"+
+					"ShipPart.ShipNum=Ship.ShipNum AND ShipPart.PartNum=Part.PartNum AND ShipName='"+chosenShip+"'";
 
-		ArrayList<ArrayList<Object>> table = null;
+			table = conn.getQueryAsLists(query);
 
-		DBConnect james = new DBConnect ("dsantana","silence");	
-			
-		String query ="select CNTLOCID, ROUTE from dsantana.adot2012 where CNTLOCID<100010"; 
+			out.write(DBConnect.toTable(table));
 
-		//get query from DB as an array of arrays. 
-		table = james.getQueryAsLists(query);
-
-		james.close();
-
-		out.write(DBConnect.toTable(table));
+		}
+		conn.close();
 
 	%>
 
+	<br>
 	<a href=./index.jsp> Go Home</a>
 
 
