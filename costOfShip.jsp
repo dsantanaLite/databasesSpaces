@@ -52,14 +52,35 @@
 	<%
 		String chosenShip = request.getParameter("ships");
 
-		if(chosenShip!=null){	
-			out.write("You chose to see the cost of ship: "+chosenShip);
+		//only continue if the user has chosen a ship from the list. 
+		if(chosenShip!=null && !chosenShip.equals("Choose a Ship")){	
 
+			out.write("<p>Cost of "+chosenShip+"</p>");
+
+			if(chosenShip.contains("'")){
+				int index=chosenShip.indexOf('\'');
+				chosenShip = chosenShip.substring(0,index)+"'"+chosenShip.substring(index);
+			}
+
+			//list of parts and their cost for chosen ship 
 			query = "select PartName, PartCost from emanuelb.Part,emanuelb.Ship,emanuelb.ShipPart where +"+
 					"ShipPart.ShipNum=Ship.ShipNum AND ShipPart.PartNum=Part.PartNum AND ShipName='"+chosenShip+"'";
 
 			table = conn.getQueryAsLists(query);
 
+			//write parts list
+			out.write(DBConnect.toTable(table));
+
+			//Parts Cost for the chosen ship
+			query = "SELECT SUM(PartCost) FROM emanuelb.Part WHERE PartNum IN "+
+					"(SELECT PartNum from emanuelb.ShipPart WHERE ShipNum IN "+
+					"(SELECT ShipNum FROM emanuelb.Ship WHERE ShipName='"+chosenShip+"'))";
+
+			table = conn.getQueryAsLists(query);
+
+			out.write("<br>");
+
+			//write part cost. 
 			out.write(DBConnect.toTable(table));
 
 		}

@@ -8,31 +8,63 @@
 	
 	<body>
 
-	<h1> Welcome Engineers</h1>	
 
 	<div id="searchresult" align="center" >
-	<pre>
 
-	<%
-		
+	<h1> Welcome Engineers</h1>	
+
+		<form action="./engineerPage.jsp" method="GET">
+			<label> Parts 
+			<select name="parts">
+				<option>Choose a Part</option>
+		<%
+
 		ArrayList<ArrayList<Object>> table = null;
 
-		DBConnect james = new DBConnect ("dsantana","silence");	
+		DBConnect conn = new DBConnect ("dsantana","silence");	
+			
+		//get part names to make options table
+		String query ="select PartName from emanuelb.Part"; 
 
-		String query ="select CNTLOCID, ROUTE from dsantana.adot2012 where CNTLOCID<100010"; 
-
-		out.write(query);
-	
 		//get query from DB as an array of arrays. 
-		table = james.getQueryAsLists(query);
+		table = conn.getQueryAsLists(query);
 
-		james.close();
+		for(int i=1; i<table.get(0).size(); i++){
+			String partName = (String) table.get(0).get(i);
+			out.write("<option value=\"");
+			out.write(partName);
+			out.write("\">" + partName);
+			out.write("</option>");
+		}
 
-		out.write(DBConnect.toTable(table));
+		%>
 
-	%>
-	</pre>
+			</select>
+			</label>
+			<br><br>
+			<label>New Cost 
+				<input type=number name="newCost" required=true></input>
+			</label>
+			<br><br>
+			<input type=submit value="Update Cost"> </input>
+		<%
+			String partName = request.getParameter("parts");
+			String cost = request.getParameter("newCost");
+	
+			if(partName!=null && cost!=null){
+				//place query for cost update here
+				out.write("<p>The cost of "+partName+" has been changed to "+cost+"</P>");	
+			}
+
+		%>
+
+		</form>
+
+
+
+		<a href=./index.jsp> Go Home</a>
+
+
 	</div>
-	<a href=./index.jsp> Go Home</a>
 	</body>
 </html>
