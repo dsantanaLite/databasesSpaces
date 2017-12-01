@@ -1,0 +1,7 @@
+Customer (CustNum, Name, ContractNum):
+Ship (ShipNum, ShipName, MarkUp)
+Department (DeptName, ShipNum)
+Part (PartNum, PartName, PartCost, IsLux)
+ShipPart (ShipNum, PartNum)
+Contract(ContractNum, CustName, ShipNum, Cost)
+MissingPart (ContractNum, PartNum)
