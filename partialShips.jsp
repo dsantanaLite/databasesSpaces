@@ -8,31 +8,31 @@
 	
 	<body>
 
-	<h1>Partially Complete Ships</h1>	
 
-	<div id="searchresult" align="center" >
-	<pre>
+	<div  align="center" >
+	
+		<h1>Partially Complete Ships</h1>	
 
+		<p>Just need working query</p>
 	<%
 		
-		ArrayList<ArrayList<Object>> table = null;
+//		ArrayList<ArrayList<Object>> table = null;
 
-		DBConnect james = new DBConnect ("dsantana","silence");	
+//		DBConnect conn = new DBConnect ("dsantana","silence");	
 
-		String query ="select CNTLOCID, ROUTE from dsantana.adot2012 where CNTLOCID<100010"; 
-
-		out.write(query);
+//		String query ="SELECT ShipNum, emanuelb.Contract.ContractNum FROM emanuelb.Contract, emanuelb.MissingPart "+
+//						"WHERE emanuelb.Contract.ContractNum = emanuelb.MissingPart.ContractNum";
 	
 		//get query from DB as an array of arrays. 
-		table = james.getQueryAsLists(query);
+//		table = conn.getQueryAsLists(query);
 
-		james.close();
+//		out.write(DBConnect.toTable(table));
 
-		out.write(DBConnect.toTable(table));
+//		conn.close();
 
 	%>
-	</pre>
+		<a href=./index.jsp> Go Home</a>
+
 	</div>
-	<a href=./index.jsp> Go Home</a>
 	</body>
 </html>

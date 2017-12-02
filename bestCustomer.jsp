@@ -8,31 +8,33 @@
 	
 	<body>
 
-		<h1>Top Customer</h1>	
 	
 		<div id="searchresult" align="center" >
 	
-		<pre>
-	
+			<h1>Top Customer</h1>	
+
+			<p>Just need working query</p>
 		<%
 		
-			ArrayList<ArrayList<Object>> table = null;
+//			ArrayList<ArrayList<Object>> table = null;
 
-			DBConnect james = new DBConnect ("dsantana","silence");	
+//			DBConnect conn = new DBConnect ("dsantana","silence");	
 
-			String query ="select CNTLOCID, ROUTE from dsantana.adot2012 where CNTLOCID<100010"; 
+//			String query="SELECT Name, SUM(Cost) FROM emanuelb.Contract "+
+//			"INNER JOIN emanuelb.Customer ON Customer.ContractNum=Contract.ContractNum "+
+//			"GROUP BY Customer.Name";
 
 			//get query from DB as an array of arrays. 
-			table = james.getQueryAsLists(query);
+//			table = conn.getQueryAsLists(query);
 	
-			james.close();
+//			conn.close();
 
-			out.write(DBConnect.toTable(table));
+//			out.write(DBConnect.toTable(table));
 
 		%>
-		</pre>
+			<a href=./index.jsp> Go Home</a>
+
 		</div>
-		<a href=./index.jsp> Go Home</a>
 	</body>
 </html>
 		

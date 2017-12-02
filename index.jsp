@@ -36,6 +36,16 @@
 
 			<br/>	
 
+			<a href="./missingPartsAvg.jsp"> Average Cost of Missing Parts </a>	
+
+			<br/>	
+
+			<a href="./mostExpensivePart.jsp"> Most Expensive Missing Part</a>	
+
+			<br/>	
+
+
+
 			<form action="./index.jsp" method="GET">
 
 				<h2>Order a Ship</h2>
