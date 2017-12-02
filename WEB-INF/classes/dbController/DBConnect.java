@@ -264,4 +264,26 @@ public class DBConnect{
 
 		return table;
 	}
+
+	public void execute(String query){
+
+		try{
+
+        stmt = dbconn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		stmt.executeQuery(query);
+
+
+        } catch (SQLException e) {
+
+                System.err.println("*** SQLException: Could not fetch query results.");
+                System.err.println("Message:   " + e.getMessage());
+                System.err.println("SQLState:  " + e.getSQLState());
+                System.err.println("ErrorCode: " + e.getErrorCode());
+                System.exit(-1);
+
+        }
+
+
+
+	}
 }

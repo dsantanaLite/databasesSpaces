@@ -44,8 +44,6 @@
 
 			<br/>	
 
-
-
 			<form action="./index.jsp" method="GET">
 
 				<h2>Order a Ship</h2>

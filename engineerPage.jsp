@@ -52,6 +52,9 @@
 			String cost = request.getParameter("newCost");
 	
 			if(partName!=null && cost!=null){
+
+				query = "update emanuelb.Part set PartCost="+cost+" where PartName='"+partName+"'";
+				conn.execute(query);
 				//place query for cost update here
 				out.write("<p>The cost of "+partName+" has been changed to "+cost+"</P>");	
 			}
