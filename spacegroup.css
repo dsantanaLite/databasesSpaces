@@ -1,4 +1,8 @@
 
+	html,body{
+		background-color:#d3d3d3;
+	}
+
 	p,label,option, select,input, table, td, tr{
 		font-size: 20pt;
 	}
