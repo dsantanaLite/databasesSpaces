@@ -38,7 +38,8 @@ create table Contract(
 );
 create table MissingPart(
 	ContractNum integer not null,
-	PartNum integer not null
+	PartNum integer not null,
+	constraint MisPartKey primary key(ContractNum, PartNum)
 );
 
 
