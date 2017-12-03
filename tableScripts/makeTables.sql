@@ -31,10 +31,11 @@ create table ShipPart(
 
 create table Contract(
 	ContractNum integer not null,
-	CustName varchar(30),
+	CustNum integer,
 	DeptName varchar(30),
+	ShipNum integer,
 	Cost number(7, 2),
-	primary key(ContractNum)
+	constraint ContractNums primary key(ContractNum, CustNum)
 );
 create table MissingPart(
 	ContractNum integer not null,
