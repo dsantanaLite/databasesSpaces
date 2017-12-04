@@ -14,7 +14,6 @@
 		<h1>Most Expensive Missing Part</h1>	
 
 		<form action="./mostExpensivePart.jsp" method="GET">
-			<label> Contracts 
 			<select name="contractNum">
 				<option>Choose a Contract</option>
 	<%
@@ -43,10 +42,9 @@
 		%>
 
 			</select>
-			</label>
 			<br><br>
 
-			<input type=submit value="See Part"> </input>
+			<input type=submit value="See Cost"> </input>
 		</form>
 
 	<%
@@ -55,7 +53,7 @@
 
 			if(contractNum!=null && !contractNum.equals("Choose a Contract")){
 
-				query ="SELECT MAX(PartCost) FROM emanuelb.Part "+
+				query ="SELECT MAX(PartCost) as Cost FROM emanuelb.Part "+
 					"join emanuelb.MissingPart on MissingPart.PartNum=Part.PartNum "+
 					"WHERE MissingPart.contractNum="+contractNum;
 
@@ -69,8 +67,6 @@
 
 
 	%>
-
-
 
 		<br>
 	

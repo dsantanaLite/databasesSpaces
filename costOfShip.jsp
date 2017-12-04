@@ -15,7 +15,6 @@
 		<h1>Cost of Ships</h1>
 
 		<form action="./costOfShip.jsp" method="GET">
-			<label> Ship Types 
 			<select name="ships">
 				<option>Choose a Ship</option>
 	<%
@@ -44,7 +43,6 @@
 		%>
 
 			</select>
-			</label>
 			<br><br>
 			<input type=submit value="See Cost"> </input>
 		</form>
@@ -63,7 +61,7 @@
 			}
 
 			//list of parts and their cost for chosen ship 
-			query = "select PartName, PartCost from emanuelb.Part,emanuelb.Ship,emanuelb.ShipPart where +"+
+			query = "select PartName as Part, PartCost as Cost from emanuelb.Part,emanuelb.Ship,emanuelb.ShipPart where +"+
 					"ShipPart.ShipNum=Ship.ShipNum AND ShipPart.PartNum=Part.PartNum AND ShipName='"+chosenShip+"'";
 
 			table = conn.getQueryAsLists(query);
@@ -72,7 +70,7 @@
 			out.write(DBConnect.toTable(table));
 
 			//Parts Cost for the chosen ship
-			query = "SELECT SUM(PartCost) FROM emanuelb.Part WHERE PartNum IN "+
+			query = "SELECT SUM(PartCost) as Total FROM emanuelb.Part WHERE PartNum IN "+
 					"(SELECT PartNum from emanuelb.ShipPart WHERE ShipNum IN "+
 					"(SELECT ShipNum FROM emanuelb.Ship WHERE ShipName='"+chosenShip+"'))";
 

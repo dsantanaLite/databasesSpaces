@@ -14,7 +14,6 @@
 	<h1> Welcome Engineers</h1>	
 
 		<form action="./engineerPage.jsp" method="POST">
-			<label> Parts 
 			<select name="parts">
 				<option>Choose a Part</option>
 		<%
@@ -40,11 +39,8 @@
 		%>
 
 			</select>
-			</label>
 			<br><br>
-			<label>New Cost 
-				<input type=number name="newCost" required=true></input>
-			</label>
+				<input type=number name="newCost" placeholder="Enter new cost" required=true></input>
 			<br><br>
 			<input type=submit value="Update Cost"> </input>
 		<%
@@ -71,7 +67,6 @@
 
 
 		<form action="./engineerPage.jsp" method="POST">
-			<label> Contracts 
 			<select name="contracts">
 				<option>Choose a Contract</option>
 
@@ -95,7 +90,6 @@
 		%>
 
 			</select>
-			</label>
 			<br><br>
 			<input type=submit value="Delete Contract"> </input>
 		<%

@@ -19,7 +19,8 @@
 
 		DBConnect conn = new DBConnect ("dsantana","silence");	
 
-		String query ="SELECT AVG(PartCost) FROM emanuelb.Part WHERE Part.partnum IN "+
+		//round the average to 2 decimal places
+		String query ="SELECT ROUND(AVG(PartCost),2) as Average FROM emanuelb.Part WHERE Part.partnum IN "+
 						"( select distinct MissingPart.partnum from "+
 						"emanuelb.Missingpart join emanuelb.contract on "+
 						"missingpart.contractnum=contract.contractnum)";

@@ -13,24 +13,29 @@
 	
 		<h1>Partially Complete Ships</h1>	
 
-		<p>Just need working query</p>
 	<%
 		
-//		ArrayList<ArrayList<Object>> table = null;
+		ArrayList<ArrayList<Object>> table = null;
 
-//		DBConnect conn = new DBConnect ("dsantana","silence");	
+		DBConnect conn = new DBConnect ("dsantana","silence");	
 
 //		String query ="SELECT ShipNum, emanuelb.Contract.ContractNum FROM emanuelb.Contract, emanuelb.MissingPart "+
-//						"WHERE emanuelb.Contract.ContractNum = emanuelb.MissingPart.ContractNum";
+//						"WHERE emanuelb.Contract.ContractNum = emanuelb.MissingPart.ContractNum "+
+//						"group by emanuelb.Contract.ContractNum having emanuelb.Contract.ContractNum>0";
+
+		String query = "select ShipNum, ContractNum from emanuelb.Contract where ContractNum IN ( "+
+						"select ContractNum from emanuelb.MissingPart)";
 	
 		//get query from DB as an array of arrays. 
-//		table = conn.getQueryAsLists(query);
+		table = conn.getQueryAsLists(query);
 
-//		out.write(DBConnect.toTable(table));
+		out.write(DBConnect.toTable(table));
 
-//		conn.close();
+		conn.close();
 
 	%>
+		<br>
+
 		<a href=./index.jsp> Go Home</a>
 
 	</div>

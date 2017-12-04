@@ -13,25 +13,29 @@
 	
 			<h1>Top Customer</h1>	
 
-			<p>Just need working query</p>
 		<%
 		
-//			ArrayList<ArrayList<Object>> table = null;
+			ArrayList<ArrayList<Object>> table = null;
 
-//			DBConnect conn = new DBConnect ("dsantana","silence");	
+			DBConnect conn = new DBConnect ("dsantana","silence");	
 
-//			String query="SELECT Name, SUM(Cost) FROM emanuelb.Contract "+
-//			"INNER JOIN emanuelb.Customer ON Customer.ContractNum=Contract.ContractNum "+
-//			"GROUP BY Customer.Name";
+			String query =  "select customer.custnum, customer.custname, sum(Contract.cost) as total_cost "+
+							"from emanuelb.Contract "+
+							"join emanuelb.Customer on Contract.custnum=Customer.custnum "+
+							"where rownum<=1 "+
+							"GROUP BY customer.custnum, customer.custname "+
+							"ORDER BY total_cost DESC";
 
 			//get query from DB as an array of arrays. 
-//			table = conn.getQueryAsLists(query);
+			table = conn.getQueryAsLists(query);
 	
-//			conn.close();
+			conn.close();
 
-//			out.write(DBConnect.toTable(table));
+			out.write(DBConnect.toTable(table));
 
 		%>
+	
+			<br><br>
 			<a href=./index.jsp> Go Home</a>
 
 		</div>
