@@ -19,15 +19,27 @@
 
 			DBConnect conn = new DBConnect ("dsantana","silence");	
 
-			String query =  "select customer.custnum, customer.custname, sum(Contract.cost) as total_cost "+
-							"from emanuelb.Contract "+
-							"join emanuelb.Customer on Contract.custnum=Customer.custnum "+
-							"where rownum<=1 "+
-							"GROUP BY customer.custnum, customer.custname "+
-							"ORDER BY total_cost DESC";
+			String query =  "create global temporary table myTable "+
+						"on commit preserve rows as select customer.custnum, customer.custname, sum(Contract.cost) as total_cost "+
+						"from emanuelb.Contract join emanuelb.Customer on Contract.custnum=Customer.custnum " +
+						"GROUP BY customer.custnum, customer.custname ORDER BY total_cost DESC ";
+
+			conn.execute(query);
+
+			System.out.println("FIRST QUERY ");
+
+			query="select * from myTable where total_cost=(select max(total_cost) from myTable) ";
+
+			table=conn.getQueryAsLists(query);		
+
+			System.out.println("SECOND QUERY ");
 
 			//get query from DB as an array of arrays. 
 			table = conn.getQueryAsLists(query);
+
+			conn.execute("truncate table myTable");
+	
+			conn.execute("drop table myTable");
 	
 			conn.close();
 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<%@page import="java.util.*, dbController.DBConnect" %>
+<%@page import="java.util.*,  java.math.BigDecimal,dbController.DBConnect" %>
 <html>
 	<head>
 		<title> Database Access </title>
@@ -106,6 +106,47 @@
 				out.write("<p>Contract Number "+contractNum+" has been deleted</P>");	
 			}
 
+		%>
+
+		</form>
+
+		<form action="./engineerPage.jsp" method="POST">
+
+			<input type=text name="newShipName" required=true placeholder="Ship Name"/><br><br>
+			<input type=number name="markup" min=1 max=999 step=.1 required=true placeholder="Markup"/><br><br>
+			<input type=text name="dept" required=true placeholder="Department"/><br><br>
+
+			<input type=submit value="Add Ship"/>
+
+		<%
+			String newShipName = request.getParameter("newShipName");
+			String markup      = request.getParameter("markup");
+			String dept        = request.getParameter("dept");
+	
+			if(newShipName!=null && markup!=null && dept!=null){
+
+				query = "select MAX(ShipNum) from emanuelb.Ship";
+
+				table = conn.getQueryAsLists(query);
+			
+				//shipNum of new ship is one more than the current max value. 
+				BigDecimal shipNumBig = (BigDecimal)table.get(0).get(1); 
+				int shipNum = shipNumBig.intValue()+1; 
+
+				//add ship to Ship relation
+				query = "insert into emanuelb.Ship values ("+shipNum+", '"+newShipName+"', "+markup+")";	
+				conn.execute(query);
+			
+				//add ship to chosen department
+				query = "insert into emanuelb.Department values('"+dept+"', "+shipNum+")";
+
+				conn.execute(query);
+	
+				//place query for cost update here
+				out.write("<p>Ship "+newShipName+" has been added to "+dept+"</P>");	
+			}
+
+			conn.close();
 		%>
 
 		</form>
