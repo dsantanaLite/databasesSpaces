@@ -70,7 +70,7 @@ insert into emanuelb.ShipPart values(3, 14);
 
 -- Contract(ContractNum, CustName, ShipNum, Cost)
 -- Olivia's contracts
-insert into emanuelb.Contract values(3, 'Olivia', 'Antitrust', 0);
+insert into emanuelb.Contract values(3, 3, 'Antitrust', 3, 0);
 -- Paul's contracts
 insert into emanuelb.Contract values(6, 'Paul', 'Treasury', 0);
 insert into emanuelb.Contract values(4, 'Paul', 'Transport', 0);
@@ -81,8 +81,8 @@ insert into emanuelb.Contract values(14, 'Jose', 'Commerce', 0);
 insert into emanuelb.Contract values(12, 'Jose', 'Transport', 0);
 insert into emanuelb.Contract values(11, 'Jose', 'Antitrust', 0);
 -- Jake's contracts
-insert into emanuelb.Contract values(9, 'Jake', 'Education', 0);
-insert into emanuelb.Contract values(7, 'Jake', 'Treasury', 0);
+insert into emanuelb.Contract values(9, 6, 'Education', 1, 0);
+insert into emanuelb.Contract values(7, 6, 'Treasury', 2, 0);
 
 -- MissingPart (ContractNum, PartNum)
 -- Olivia's Wobblin' Goblin
