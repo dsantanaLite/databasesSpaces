@@ -11,7 +11,7 @@
 	}
 
 	legend,p,label,option, select,input, table, td, tr{
-		font-size: 20pt;
+		font-size: 18pt;
 	}
 
 	p, label, legend{
@@ -54,7 +54,7 @@
 	
 	a{
 		color:white;
-		padding-top:22px;
+		padding-top:15px;
 		display:block;
 		text-decoration:none;
 		font-size:30px;

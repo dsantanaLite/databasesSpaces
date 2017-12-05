@@ -8,7 +8,6 @@
 	
 	<body>
 
-
 	<div id="searchresult" align="center" >
 
 	<h1> Welcome Engineers</h1>	
@@ -45,14 +44,14 @@
 			<input type=submit value="Update Cost"> </input>
 		<%
 			String partName = request.getParameter("parts");
-			String cost = request.getParameter("newCost");
+			String newCost = request.getParameter("newCost");
 	
-			if(partName!=null && cost!=null && !partName.equals("Choose a Part")){
+			if(partName!=null && newCost!=null && !partName.equals("Choose a Part")){
 
-				query = "update emanuelb.Part set PartCost="+cost+" where PartName='"+partName+"'";
+				query = "update emanuelb.Part set PartCost="+newCost+" where PartName='"+partName+"'";
 				conn.execute(query);
 				//place query for cost update here
-				out.write("<p>The cost of "+partName+" has been changed to "+cost+"</P>");	
+				out.write("<p>The cost of "+partName+" has been changed to "+newCost+"</P>");	
 			}
 
 		%>
@@ -110,6 +109,94 @@
 
 		</form>
 
+
+		<form action="./engineerPage.jsp" method="POST">
+
+			<input type=text name="dept" required=true placeholder="Department"/><br><br>
+
+			<select name="deptShipNum">
+				<option>Choose Ship Number</option>
+
+				<%
+
+				//get part names to make options table
+				query ="select ShipNum from emanuelb.Ship"; 
+
+				//get query from DB as an array of arrays. 
+				table = conn.getQueryAsLists(query);
+
+				for(int i=1; i<table.get(0).size(); i++){
+					//shipNums as options
+					String shipNum = table.get(0).get(i).toString();
+					out.write("<option value=\"");
+					out.write(shipNum);
+					out.write("\">" + shipNum);
+					out.write("</option>");
+				}
+
+				%>
+
+			</select>
+			<br><br>
+
+
+			<input type=submit value="Add Department"/>
+
+		<%
+			String addDept        = request.getParameter("dept");
+			String deptShipNum = request.getParameter("deptShipNum");
+
+			if(addDept!=null && !deptShipNum.equals("Choose Ship Number")){
+
+				//add ship to chosen department
+				query = "insert into emanuelb.Department values('"+addDept+"', "+deptShipNum+")";
+
+				conn.execute(query);
+	
+				//place query for cost update here
+				out.write("<p>Department "+addDept+" has been added</P>");	
+			}
+
+		%>
+
+		</form>
+
+
+		<form action="./engineerPage.jsp" method="POST">
+
+			<input type=text name="newPartName" required=true placeholder="Part Name"/><br><br>
+			<input type=number name="cost" min=1 max=9999 step= required=true placeholder="Cost"/><br><br>
+
+			<input type=submit value="Add Part"/>
+
+		<%
+			String newPartName = request.getParameter("newPartName");
+			String cost        = request.getParameter("cost");
+	
+			if(newPartName!=null && cost!=null){
+
+				query = "select MAX(PartNum) from emanuelb.Part";
+
+				table = conn.getQueryAsLists(query);
+			
+				//shipNum of new ship is one more than the current max value. 
+				BigDecimal partNumBig = (BigDecimal)table.get(0).get(1); 
+				int partNum = partNumBig.intValue()+1; 
+
+				//add ship to Ship relation
+				query = "insert into emanuelb.Part values ("+partNum+", '"+newPartName+"', "+cost+", "+"1"+")";	
+
+				conn.execute(query);
+	
+				out.write("<p>Part "+newPartName+" has been added </P>");	
+			}
+
+		%>
+
+		</form>
+
+
+
 		<form action="./engineerPage.jsp" method="POST">
 
 			<input type=text name="newShipName" required=true placeholder="Ship Name"/><br><br>
@@ -142,7 +229,6 @@
 
 				conn.execute(query);
 	
-				//place query for cost update here
 				out.write("<p>Ship "+newShipName+" has been added to "+dept+"</P>");	
 			}
 
