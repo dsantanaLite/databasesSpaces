@@ -11,7 +11,7 @@
 	
 		<div id="searchresult" align="center" >
 	
-			<h1>Top Customer</h1>	
+			<h1>Top Customer(s)</h1>	
 
 		<%
 		

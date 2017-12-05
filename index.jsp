@@ -19,7 +19,14 @@
 	
 			<br><br>
 
+			<a href="./orderPage.jsp"> Order a Ship </a>
+	
+			<br/>	
 
+			<a href="./editOrder.jsp"> Add to Existing Order </a>
+
+			<br/>
+	
 			<a href="./costOfShip.jsp"> Cost of Ships</a>
 
 			<br/>
@@ -31,10 +38,6 @@
 			<a href="./bestCustomer.jsp">Top Customer</a>
 
 			<br/>
-			
-			<a href="./engineerPage.jsp"> Engineer Log In </a>	
-
-			<br/>	
 
 			<a href="./missingPartsAvg.jsp"> Average Cost of Missing Parts </a>	
 
@@ -44,8 +47,10 @@
 
 			<br/>	
 
-			<a href="./orderPage.jsp"> Order a Ship </a>
-	
+			<a href="./engineerPage.jsp"> Engineer Log In </a>	
+
+			<br/>	
+
 		</div>
 
 	</body>
