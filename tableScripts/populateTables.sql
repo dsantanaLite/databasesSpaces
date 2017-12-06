@@ -70,39 +70,31 @@ insert into emanuelb.ShipPart values(3, 14);
 
 -- Contract(ContractNum, CustName, ShipNum, Cost)
 -- Olivia's contracts
-insert into emanuelb.Contract values(3, 3, 'Antitrust', 3, 0);
+insert into emanuelb.Contract values(3, 3, 'Antitrust', 3, 7589);
 -- Paul's contracts
-insert into emanuelb.Contract values(6, 4, 'Treasury', 2, 0);
-insert into emanuelb.Contract values(4, 4, 'Transport', 1, 0);
+insert into emanuelb.Contract values(6, 4, 'Treasury', 2, 11538);
+insert into emanuelb.Contract values(4, 4, 'Transport', 1, 11538);
 insert into emanuelb.Contract values(5, 4, 'Antitrust', 3, 0);
 -- Jose's contracts
-insert into emanuelb.Contract values(13, 5, 'Antitrust', 3, 0);
-insert into emanuelb.Contract values(14, 5, 'Commerce', 3, 0);
-insert into emanuelb.Contract values(12, 5, 'Transport', 1, 0);
-insert into emanuelb.Contract values(11, 5, 'Antitrust', 3, 0);
+insert into emanuelb.Contract values(13, 5, 'Antitrust', 3, 11538);
+insert into emanuelb.Contract values(14, 5, 'Commerce', 3, 11538);
+insert into emanuelb.Contract values(12, 5, 'Transport', 1, 11538);
+insert into emanuelb.Contract values(11, 5, 'Antitrust', 3, 11538);
 -- Jake's contracts
-insert into emanuelb.Contract values(9, 6, 'Education', 1, 0);
-insert into emanuelb.Contract values(7, 6, 'Treasury', 2, 0);
+insert into emanuelb.Contract values(9, 6, 'Education', 1, 8154);
+insert into emanuelb.Contract values(7, 6, 'Treasury', 2, 11538);
 
 -- MissingPart (ContractNum, PartNum)
 -- Olivia's Wobblin' Goblin
 insert into MissingPart values(3, 0);
-insert into MissingPart values(3, 1);
-insert into MissingPart values(3, 2);
 
 -- Paul's Voyager
-insert into MissingPart values(6, 0);
-insert into MissingPart values(6, 1);
-insert into MissingPart values(6, 2);
 -- Alarm system
 insert into MissingPart values(6, 6);
 -- Flame decal
 insert into MissingPart values(6, 8);
 
 -- Paul's Little Stinker
-insert into MissingPart values(4, 0);
-insert into MissingPart values(4, 1);
-insert into MissingPart values(4, 2);
 -- Air freshener
 insert into MissingPart values(4, 5);
 
@@ -120,31 +112,20 @@ insert into MissingPart values(5, 12);
 insert into MissingPart values(5, 13);
 
 -- Jose's Wobblin' Goblin
-insert into MissingPart values(13, 0);
-insert into MissingPart values(13, 1);
-insert into MissingPart values(13, 2);
 -- Chef
 insert into MissingPart values(13, 12);
 
 -- Jose's Wobblin' Goblin
-insert into MissingPart values(14, 0);
-insert into MissingPart values(14, 1);
-insert into MissingPart values(14, 2);
 -- Spoiler
 insert into MissingPart values(14, 10);
 -- Sun roof
 insert into MissingPart values(14, 14);
 
 -- Jose's Little Stinker
-insert into MissingPart values(12, 0);
-insert into MissingPart values(12, 1);
-insert into MissingPart values(12, 2);
+-- Tiki doll
 insert into MissingPart values(12, 4);
 
 -- Jose's Wobblin' Goblin
-insert into MissingPart values(11, 0);
-insert into MissingPart values(11, 1);
-insert into MissingPart values(11, 2);
 -- Spoiler
 insert into MissingPart values(11, 10);
 -- Radio
@@ -157,14 +138,9 @@ insert into MissingPart values(11, 13);
 insert into MissingPart values(11, 14);
 
 -- Jake's Little Stinker
-insert into MissingPart values(9, 0);
-insert into MissingPart values(9, 1);
 insert into MissingPart values(9, 2);
 insert into MissingPart values(9, 4);
 
 -- Jake's Voyager
-insert into MissingPart values(7, 0);
-insert into MissingPart values(7, 1);
-insert into MissingPart values(7, 2);
 -- Steering wheel cover
 insert into MissingPart values(7, 7);
