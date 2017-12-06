@@ -10,16 +10,12 @@
 	<body>
 
 
-	<div id="searchresult" align="center" >
-
-			<form id="orderForm" action="./orderPage.jsp" method="POST">
+	<div align="center" >
 
 				<h1>Order a Ship</h1>
 
-				<fieldset align="left">
-					<legend>Choose Your Ship and Parts:</legend> 
-					<br><br>
-			
+
+			<form id="orderForm" action="./orderPage.jsp" method="POST">
 					<select name="ships">
 						<option>Choose a Ship</option>
 		<%
@@ -48,159 +44,90 @@
 		%>
 					</select>
 
-					<br><br>
-			<%
-
-			//get part names to make options
-			query ="select PartName, PartCost from emanuelb.Part where isLux=1"; 
-
-			//get query from DB as an array of arrays. 
-			table = conn.getQueryAsLists(query);
-
-			for(int i=1; i<table.get(0).size();i++){
-				String name = (String) table.get(0).get(i);
-				String cost = table.get(1).get(i).toString();
-				out.write("<input type=checkbox name=\"parts[]\" id=\""+name+"\" value=\""+name+"\"/>");
-				out.write("<label for=\""+name+"\">"+name+" ($"+cost+")</label><br>");
-			}
-
-			%>
-
-			<p>These parts are required:</p>
-
-			<%
-			//get part names to make options
-			query ="select PartName, PartCost from emanuelb.Part where isLux=0"; 
-
-			//get query from DB as an array of arrays. 
-			table = conn.getQueryAsLists(query);
-
-			for(int i=1; i<table.get(0).size();i++){
-				String name = (String) table.get(0).get(i);
-				String cost = table.get(1).get(i).toString();
-				out.write("<input type=checkbox checked=\"checked\" name=\"parts[]\" id=\""+name+"\" value=\""+name+"\"/>");
-				out.write("<label for=\""+name+"\">"+name+" ($"+cost+")</label><br>");
-			}
-
-
-
-			%>
-
-				</fieldset>
-
 				<br><br>
 
-				<label>Customer Name 
-					<input type=text name="custName" required=true></input>
-				</label>
-
-				<br><br>
-
-				<input type=submit value="Order Ship"> </input>
-
+				<input type=submit value="Choose Ship"> </input>
 
 			</form>
 
+			<form id="orderform" action="confirmOrder.jsp">
+
+				<fieldset align="left">
+					<legend>Choose Your Parts:</legend> 
+						<br><br>
+	
 			<%
-				//THIS BLOCK ONLY NECESSARY POST-ORDER
 
-				String customerName = request.getParameter("custName");
-				String shipName = request.getParameter("ships");			
-
-				out.write("<p>");		
+			String shipName = request.getParameter("ships");			
+	
+			out.write("<p>");		
 			
-				if(customerName!=null && !shipName.equals("Choose a Ship")){
+			if(shipName!=null && !shipName.equals("Choose a Ship")){
 
 					if(shipName.contains("'")){
 						int index=shipName.indexOf('\'');
 						shipName = shipName.substring(0,index)+"'"+shipName.substring(index);
 					}
+		
+					out.write("<input type='hidden' name='custShip' value='"+shipName+"'></>");
+					out.write("<br><br>");
+					//get shipNumber that user chose
+					query = "select ShipNum from emanuelb.Ship where ShipName='"+shipName+"'";
 
-					//get select parts
-					String[] partArray=request.getParameterValues("parts[]");		
+					table = conn.getQueryAsLists(query);
+					BigDecimal shipNumBig = (BigDecimal) table.get(0).get(1); 
+					int shipNum = shipNumBig.intValue();
 
-					if(partArray!=null && partArray.length>=3){	
+					//get part names to make options
+					query ="select PartName, PartCost from emanuelb.Part where isLux=1 AND PartNum IN "+
+					"(select PartNum from emanuelb.ShipPart where ShipNum="+shipNum+")"; 
 
-						query = "select MAX(CustNum) from emanuelb.Customer";
+					//get query from DB as an array of arrays. 
+					table = conn.getQueryAsLists(query);
 
-						table = conn.getQueryAsLists(query);
-			
-						//custNum of new customer is one more than the current max cust value. 
-						BigDecimal custNumBig = (BigDecimal)table.get(0).get(1); 
-						int custNum = custNumBig.intValue()+1; 
-
-						query = "select MAX(ContractNum) from emanuelb.Contract";
-
-						table = conn.getQueryAsLists(query);
-			
-						//contractNum of new contract is one more than the current max value. 
-						BigDecimal contractNumBig = (BigDecimal)table.get(0).get(1); 
-						int contractNum = contractNumBig.intValue()+1; 
-
-						//get shipNumber that user chose
-						query = "select ShipNum from emanuelb.Ship where ShipName='"+shipName+"'";
-
-						table = conn.getQueryAsLists(query);
-						BigDecimal shipNumBig = (BigDecimal) table.get(0).get(1); 
-						int shipNum = shipNumBig.intValue();
-
-						//select a department to build the ship
-						query = "select DeptName from emanuelb.Department where ShipNum="+shipNum;
-
-						table = conn.getQueryAsLists(query);
-				
-						Random rand = new Random();
-
-						int deptIndex = rand.nextInt(table.get(0).size()-1)+1;
-	
-						String deptName = (String) table.get(0).get(deptIndex);
-
-						int cost = 0;
-
-						for (int i=0; i<partArray.length; i++){
-							query = "select PartCost from emanuelb.Part where PartName='"+partArray[i]+"'";	
-							table = conn.getQueryAsLists(query);
-							BigDecimal costBig = (BigDecimal) table.get(0).get(1); 
-							int newCost = costBig.intValue();
-							cost += newCost;
-						}
-						
-						query = "Insert into emanuelb.Customer values ("+custNum+", '"+customerName+"')";
-
-						conn.execute(query);
-
-						query = "insert into emanuelb.Contract values ("+contractNum+", "+custNum+", '"+deptName+"', "+shipNum+", "+cost+")";
-
-						conn.execute(query);
-
-						for(int i=0; i<partArray.length;i++){
-							query = "select PartNum from emanuelb.Part where PartName='"+partArray[i]+"'";
-							table = conn.getQueryAsLists(query);
-							BigDecimal partNumBig = (BigDecimal) table.get(0).get(1);
-							int partNum = partNumBig.intValue();
-							query = "Insert into emanuelb.MissingPart values ("+contractNum+", "+partNum+")";
-							conn.execute(query);
-						}
-
-						out.write("Your order has been placed, Thanks "+customerName);
-
-
-					}else{
-						out.write("ERROR: You must include the 3 required parts.");
+					for(int i=1; i<table.get(0).size();i++){
+						String name = (String) table.get(0).get(i);
+						String cost = table.get(1).get(i).toString();
+						out.write("<input type=checkbox name=\"parts[]\" id=\""+name+"\" value=\""+name+"\"/>");
+						out.write("<label for=\""+name+"\">"+name+" ($"+cost+")</label><br>");
 					}
-				
-				}else{
-					if(customerName!=null)
-						out.write("ERROR: Please select a base ship");
-				}
-				
-				out.write("</p>");
 
-				conn.close();
-			
-			%>
+					out.write("<p>These parts are required:</p>");
+
+					//get part names to make options
+					query ="select PartName, PartCost from emanuelb.Part where isLux=0";
+
+					//get query from DB as an array of arrays. 
+					table = conn.getQueryAsLists(query);
+
+					for(int i=1; i<table.get(0).size();i++){
+						String name = (String) table.get(0).get(i);
+						String cost = table.get(1).get(i).toString();
+						out.write("<input type=checkbox checked=true name=\"parts[]\" id=\""+name+"\" value=\""+name+"\"/>");
+						out.write("<label for=\""+name+"\">"+name+" ($"+cost+")</label><br>");
+					}
 
 
+			}
+
+					conn.close();
+
+				%>
+
+
+			</fieldSet>
+
+				<br><br>
+
+				<input type=text name="custName" required=true placeholder="Name"/>
+
+				<br><br>
+
+				<input type=submit value="See Cost"> </input>
+
+			</form>
+
+					<br><br>
 			<a href=./index.jsp> Go Home</a>
 
 		</div>

@@ -26,7 +26,11 @@
 			<a href="./editOrder.jsp"> Add to Existing Order </a>
 
 			<br/>
-	
+		
+			<a href="./contractPage.jsp"> View a Contract</a>
+
+			<br/>
+ 
 			<a href="./costOfShip.jsp"> Cost of Ships</a>
 
 			<br/>
@@ -38,6 +42,10 @@
 			<a href="./bestCustomer.jsp">Top Customer</a>
 
 			<br/>
+
+			<a href="./payments.jsp"> Monthly Payment Calculator </a>	
+
+			<br/>	
 
 			<a href="./missingPartsAvg.jsp"> Average Cost of Missing Parts </a>	
 

@@ -201,14 +201,14 @@
 
 			<input type=text name="newShipName" required=true placeholder="Ship Name"/><br><br>
 			<input type=number name="markup" min=1 max=999 step=.1 required=true placeholder="Markup"/><br><br>
-			<input type=text name="dept" required=true placeholder="Department"/><br><br>
+			<input type=text name="newShipDept" required=true placeholder="Department"/><br><br>
 
 			<input type=submit value="Add Ship"/>
 
 		<%
 			String newShipName = request.getParameter("newShipName");
 			String markup      = request.getParameter("markup");
-			String dept        = request.getParameter("dept");
+			String dept        = request.getParameter("newShipDept");
 	
 			if(newShipName!=null && markup!=null && dept!=null){
 
@@ -230,6 +230,78 @@
 				conn.execute(query);
 	
 				out.write("<p>Ship "+newShipName+" has been added to "+dept+"</P>");	
+			}
+
+		%>
+
+		</form>
+
+		<form action="./engineerPage.jsp" method="POST">
+
+
+			<select name="shipPartShip">
+				<option>Choose Ship Number</option>
+
+				<%
+
+				//get part names to make options table
+				query ="select ShipNum from emanuelb.Ship"; 
+
+				//get query from DB as an array of arrays. 
+				table = conn.getQueryAsLists(query);
+
+				for(int i=1; i<table.get(0).size(); i++){
+					//shipNums as options
+					String shipNum = table.get(0).get(i).toString();
+					out.write("<option value=\"");
+					out.write(shipNum);
+					out.write("\">" + shipNum);
+					out.write("</option>");
+				}
+
+				%>
+
+			</select>
+			<br><br>
+
+			<select name="shipPartPart">
+				<option>Choose a Part</option>
+			
+				<%
+
+				//get part names to make options table
+				query ="select PartNum from emanuelb.Part"; 
+
+				//get query from DB as an array of arrays. 
+				table = conn.getQueryAsLists(query);
+
+				for(int i=1; i<table.get(0).size(); i++){
+					String partNum = table.get(0).get(i).toString();
+					out.write("<option value=\"");
+					out.write(partNum);
+					out.write("\">" + partNum);
+					out.write("</option>");
+				}
+
+				%>
+
+			</select>
+			<br><br>
+
+			<input type=submit value="Add ShipPart"/>
+
+		<%
+
+			String shipPartShip = request.getParameter("shipPartShip");
+			String shipPartPart = request.getParameter("shipPartPart");
+	
+			if(shipPartShip!=null && shipPartPart!=null && !shipPartShip.equals("Choose a Part") && !shipPartShip.equals("Choose Ship Number")){
+	
+				query = "insert into emanuelb.ShipPart values("+shipPartShip+", "+shipPartPart+")";
+
+				conn.execute(query);
+
+				out.write("<p>"+shipPartShip+", "+shipPartPart+" has been added to ShipPart</p>");
 			}
 
 			conn.close();

@@ -108,9 +108,10 @@
 
 		conn.close();
 	%>
+		<br><br>
+			<a href=./index.jsp> Go Home</a>
 
-
-
-
-
-
+		</div>
+	</body>
+</html>
+		

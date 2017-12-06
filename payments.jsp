@@ -2,7 +2,7 @@
 <%@page import="java.util.*, dbController.DBConnect" %>
 <html>
 	<head>
-		<title>Most Expensive Missing Part</title>
+		<title>Monthly Payment Calculator</title>
 		<link rel="stylesheet" type="text/css" href="./spacegroup.css" />	
 	</head>
 	
@@ -11,9 +11,12 @@
 
 	<div align="center" >
 	
-		<h1>Most Expensive Missing Part</h1>	
+		<h1>Monthly Payment Calculator</h1>	
 
-		<form action="./mostExpensivePart.jsp" method="GET">
+		<p>Enter the amount you would like to pay monthly for your contract.</p>
+		<p>You will be shown how many months it will take to complete your contract.</p>
+
+		<form action="./payments.jsp" method="GET">
 			<select name="contractNum">
 				<option>Choose a Contract</option>
 	<%
@@ -26,7 +29,7 @@
 		DBConnect conn = new DBConnect ("dsantana","silence");	
 			
 		//get contracts to make options table
-		String query ="select ContractNum from emanuelb.Contract"; 
+		String query ="select ContractNum from emanuelb.Contract order by ContractNum"; 
 
 		//get query from DB as an array of arrays. 
 		table = conn.getQueryAsLists(query);
@@ -44,46 +47,27 @@
 			</select>
 			<br><br>
 
-			<input type=submit value="See Cost"> </input>
+			<input type=number name="cost" placeholder="Desired Payment" required=true></>
+	
+			<br><br>
+
+			<input type=submit value="See Payments"> </input>
 		</form>
 
 	<%
-
 			String contractNum = request.getParameter("contractNum");
+			String givenCost   = request.getParameter("cost");
 
 			if(contractNum!=null && !contractNum.equals("Choose a Contract")){
 
-				query = "create global temporary table missingTable "+
-						"on commit preserve rows as select emanuelb.Part.partname, emanuelb.Part.partcost "+
-						"from emanuelb.Part "+
-						"join emanuelb.MissingPart on Part.partnum=MissingPart.partnum "+
-						"where emanuelb.MissingPart.contractNum="+contractNum;
-					
+				query = "select ceil(Contract.cost/"+givenCost+") as Months "+
+				"from emanuelb.Contract where contract.contractNum="+contractNum;
 
-				System.out.println("1 "+query);
-
-				conn.execute(query);
-		
-				query=	" select * from missingTable "+
-						"where missingTable.partCost=(select MAX(missingTable.partCost) from missingTable)";
-
-				System.out.println("1 "+query);
+				System.out.println(query);
 
 				table=conn.getQueryAsLists(query);
-
+	
 				out.write(DBConnect.toTable(table));
-
-				query = "truncate table missingTable";
-	
-				System.out.println("1 "+query);
-					
-				conn.execute(query);
-			
-				query = "drop table missingTable";
-		
-				System.out.println("1 "+query);
-	
-				conn.execute(query);
 
 				conn.close();
 			}

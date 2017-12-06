@@ -19,12 +19,10 @@
 
 		DBConnect conn = new DBConnect ("dsantana","silence");	
 
-//		String query ="SELECT ShipNum, emanuelb.Contract.ContractNum FROM emanuelb.Contract, emanuelb.MissingPart "+
-//						"WHERE emanuelb.Contract.ContractNum = emanuelb.MissingPart.ContractNum "+
-//						"group by emanuelb.Contract.ContractNum having emanuelb.Contract.ContractNum>0";
-
-		String query = "select ShipNum, ContractNum from emanuelb.Contract where ContractNum IN ( "+
-						"select ContractNum from emanuelb.MissingPart)";
+		String query = "select distinct emanuelb.Contract.ShipNum, emanuelb.Contract.ContractNum, COUNT(emanuelb.MissingPart.ContractNum) as Missing "+
+						"from emanuelb.Contract, emanuelb.MissingPart where "+
+						"emanuelb.Contract.ContractNum = emanuelb.MissingPart.ContractNum "+
+						"group by emanuelb.Contract.ShipNum, emanuelb.Contract.ContractNum, emanuelb.MissingPart.ContractNum";
 	
 		//get query from DB as an array of arrays. 
 		table = conn.getQueryAsLists(query);
