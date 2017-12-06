@@ -34,7 +34,7 @@ create table Contract(
 	CustNum integer,
 	DeptName varchar(30),
 	ShipNum integer,
-	Cost number(7, 2),
+	Cost integer,
 	constraint ContractNums primary key(ContractNum, CustNum)
 );
 create table MissingPart(
